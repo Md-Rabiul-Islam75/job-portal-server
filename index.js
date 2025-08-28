@@ -54,6 +54,20 @@ async function run() {
       const query = { applicant_email: email };
       const cursor = jobApplicationCollection.find(query);
       const result = await cursor.toArray();
+
+      // fokira way to aggregate data
+      for (const application of result){
+        console.log(application.job_id)
+        const query1 = { _id: new ObjectId(application.job_id) }
+        const job = await jobsCollection.findOne(query1);
+
+        if(job){
+          application.title = job.title;
+          application.company = job.company;
+          application.company_logo = job.company_logo;
+        }
+      }
+
       res.send(result);
     })
 
