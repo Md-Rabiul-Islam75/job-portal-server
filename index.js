@@ -93,6 +93,15 @@ async function run() {
       res.send(result);
     })
 
+
+    app.get('/job_applications/jobs/:job_id', async (req, res) =>{
+      const jobId = req.params.job_id;
+      const query = { job_id: jobId };
+      const cursor = jobApplicationCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
     app.post('/job_applications', async (req, res) =>{
       const application = req.body;
       console.log(application);
