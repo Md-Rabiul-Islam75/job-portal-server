@@ -7,9 +7,13 @@ require('dotenv').config()
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5174'],
+  credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
+app.options('*', cors());
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.0pzgc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -90,6 +94,9 @@ async function run() {
     app.get('/job_application', async (req, res) =>{
       const email = req.query.email;
       const query = { applicant_email: email };
+
+      console.log('cuk cuk cookies', req.cookies);
+
       const cursor = jobApplicationCollection.find(query);
       const result = await cursor.toArray();
 
