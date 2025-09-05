@@ -17,7 +17,10 @@
    credentials: true
  }));
 
- 
+
+ in client side use:
+ {withCredentials: true}
+
 
  * 4. validate the token in the server side:
  * if valid: provide data 
