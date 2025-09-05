@@ -116,6 +116,10 @@ async function run() {
       const email = req.query.email;
       const query = { applicant_email: email };
 
+      if(req.user.email !== email){
+        return res.status(403).send({message: 'Forbidden access'});
+      }
+
       console.log('cuk cuk cookies', req.cookies);
 
       const cursor = jobApplicationCollection.find(query);
